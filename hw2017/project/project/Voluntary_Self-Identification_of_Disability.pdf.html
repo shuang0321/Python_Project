@@ -1,0 +1,512 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SilkRoad Onboarding - Login</title>
+
+<script type="text/javascript">
+var loaded=false;
+ns = (document.layers) ? 1:0;
+ie = (document.all) ? 1:0;
+ns6 = (document.getElementById && !document.all) ? 1:0;
+readOnly=0;
+function addLoadEvent(pFunction) {
+    var oCurrentOnload = window.onload;
+    if(typeof(window.onload) != "function") {
+        window.onload = pFunction;
+    } else {
+        window.onload = function() {
+            if(oCurrentOnload) { oCurrentOnload(); }
+            pFunction();
+        }
+    }
+}
+function clearFields() {
+    document.mainform.VerLoginID.value="";
+    document.mainform.VerPassword.value="";
+    document.mainform.elements["VerLoginID"].focus();
+}
+function fixAction(pFormObject) {
+    var sContinue = "0";
+    var sDefaultAction = "/eprise/main/SiteGen/Onboarding/Content/Uploads/Unplaced_Documents/Voluntary_Self-Identification_of_Disability.pdf";
+        pFormObject.action = sDefaultAction;
+
+        if(sContinue == "0") {
+            if(this.CustomAfterFixAction) {
+                return CustomAfterFixAction(pFormObject);
+            } else {
+                return true;
+            }
+        }
+
+    var eprisereferrer = decodeURIComponent("");
+    if(eprisereferrer.length == 0) {
+        eprisereferrer = decodeURIComponent("");
+    }
+    if(eprisereferrer.length == 0) {
+        eprisereferrer = decodeURIComponent("");
+    }
+
+        if(eprisereferrer.charAt(0)=="%") {
+            eprisereferrer = decodeURIComponent(eprisereferrer);
+        }
+
+    if ("/main/SiteGen/Onboarding/Content/Uploads/Unplaced_Documents/Voluntary_Self-Identification_of_Disability.pdf"=="/local/SystemPages/Login" && eprisereferrer != "" && eprisereferrer.charAt(0)=="/") {
+        pFormObject.action = eprisereferrer + "?" +  decodeURIComponent("");
+    } else {
+        pFormObject.action += "?" +  decodeURIComponent("");
+    }
+
+    if(this.CustomAfterFixAction) {
+        return CustomAfterFixAction(pFormObject);
+    } else {
+        return true;
+    }
+}
+function ShowEmail() {
+    document.getElementById("divEpsLoginEmailWrapper").style.display="block";
+    document.getElementById("divEpsLoginWrapper").style.display="none";
+}
+function ShowLogin() {
+    document.getElementById("divEpsLoginEmailWrapper").style.display="none";
+    document.getElementById("divEpsLoginWrapper").style.display="block";
+}
+</script>
+
+<script type="text/javascript">
+// <![CDATA[
+String.prototype.trim = function() { return this.replace(/(^\s*)|(\s*$)/g, ""); }
+String.prototype.toInt = function() { return (isNaN(parseInt(this, 10))) ? 0 : parseInt(this, 10); }
+String.prototype.padZero = function() { return (this.toInt() < 10) ? "0" + this : this; }
+String.prototype.repeat = function(n) { var s = "", t = this.toString(); while(--n >= 0) s += t; return s; }
+
+var QUERY_STRING = "" + decodeURIComponent("");
+
+function funcGetExpiryDate() {
+    var theDate = new Date();
+    return new Date(theDate.getTime() + 31536000000);
+}
+
+function funcGetCookie(pCookieName) {
+   var start = document.cookie.indexOf(pCookieName + "=");
+   var len = start + pCookieName.length + 1;
+   var end = document.cookie.indexOf(";", len);
+         if(end < 0) { end = document.cookie.length; }
+
+   if((!start) && (pCookieName != document.cookie.substring(0, pCookieName.length))) { return null; }
+   if(start < 0) { return null; }
+   
+   return decodeURIComponent(document.cookie.substring(len, end));
+}
+
+function funcSetCookie(pCookieName, pValue, pPath, pDomain, pExpires, pSecure) {
+   document.cookie = pCookieName + "=" + encodeURIComponent(pValue) +
+      ((pExpires) ? ";expires=" + pExpires.toGMTString() : "") +
+      ((pPath) ? ";path=" + pPath : "") + 
+      ((pDomain) ? ";domain=" + pDomain : "") +
+      ((pSecure) ? ";secure" : "");
+}
+
+function funcDeleteCookie(pCookieName, pPath, pDomain) {
+   if(funcGetCookie(pCookieName)) document.cookie = pCookieName + "=" +
+      ((pPath) ? ";path=" + pPath : "") +
+      ((pDomain) ? ";domain=" + pDomain : "") +
+      ";expires=Thu, 01-Jan-1970 00:00:01 GMT";
+}
+
+function makeBM() {
+    var bookmarkurl = "https://acumen-redcarpet.silkroad.com/RedCarpet/Onboarding/Uploads/Unplaced_Documents/Voluntary_Self-Identification_of_Disability.pdf" + QUERY_STRING;
+    var bookmarktitle = "SilkRoad Onboarding - Login";
+
+    if(window.sidebar) {
+        window.sidebar.addPanel(bookmarktitle, bookmarkurl, "");
+    } else if(window.external) {
+        window.external.AddFavorite(bookmarkurl, bookmarktitle);
+    }
+}
+
+function funcRememberMe() {
+    var sAction = document.forms['mainform'].action;
+    if(QUERY_STRING.indexOf("?") == 0 && sAction.indexOf("?") <= 0) {
+        alert("There is no query string.");
+        return false;
+    }
+
+    try {
+        var bChecked = document.forms['mainform'].elements['RCRememberMe'].checked;
+        var sValue = document.forms['mainform'].elements['VerLoginID'].value;
+    } catch(e) {
+        return false;
+    }
+
+    if(bChecked) {
+        funcSetCookie("RCRememberMe", sValue, "/", false, funcGetExpiryDate(), false);
+    } else {
+        funcDeleteCookie("RCRememberMe", "/");
+    }
+
+    return true;
+}
+
+function funcGoForgottenPassword() {
+   var sUrl = "/eprise/local/SystemPages/ForgottenPassword-custom" + QUERY_STRING;
+       location.href = sUrl;
+}
+
+function CustomAfterFixAction(pFormObject) {
+    return funcRememberMe();
+}
+
+function funcSetup() {
+    if(window.external || window.sidebar) {
+        var oBookmarker = document.getElementById("aBookmarker");
+            try {
+                oBookmarker.style.display = "inline";
+            } catch(e) {
+                alert("oBookmarker\n\n" + e.toString());
+            }
+    }
+
+    try {
+        var sRememberMe = funcGetCookie("RCRememberMe");
+            if(typeof(sRememberMe) == "string") {
+                if(sRememberMe.length > 0) {
+                    document.forms['mainform'].elements['VerLoginID'].value = sRememberMe;
+                    document.forms['mainform'].elements['VerPassword'].focus();
+                }
+
+                document.forms['mainform'].elements['RCRememberMe'].checked = (sRememberMe.length > 0);
+            }
+
+            if(document.forms['mainform'].elements['VerLoginID'].value.trim().length == 0) {
+                document.forms['mainform'].elements['VerLoginID'].focus();
+            }
+    } catch(e) {
+        alert("sRememberMe\n\n" + e.toString());
+    }
+
+    // Set the text for the prompts to be the RC Strings.
+    var oTemp = document.getElementById("labelLoginIdPrompt");
+        oTemp.innerHTML = "User Name:";
+        oTemp = document.getElementById("labelPasswordPrompt");
+        oTemp.innerHTML = "Password:";
+        oTemp = document.getElementById("submitLoginButton");
+        oTemp.value = "Login";
+
+        // See the comments for #centerContent in the CSS below.
+        oTemp = document.getElementById("centerContent");
+            oTemp.style.width = "571px";
+}
+// ]]>
+</script>
+
+<link href="/rc/App_Themes/Default/Default.css" type="text/css" rel="stylesheet" />
+<style type="text/css">
+.NOSHOW {
+    display:none;
+}
+body, html {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#333333;
+	text-align: center;
+}
+body {	
+	background-color:#ebebeb;
+	
+	background-image:URL(/rc/images/login/greyBG.gif);
+	
+}
+a:link {
+	color:#006699;
+	font-size:11px;
+	font-family:Arial, Helvetica, sans-serif;
+	background-color:transparent;
+}
+a:visited{
+	color:#006699;
+	font-size:11px;
+	font-family:Arial, Helvetica, sans-serif;
+	background-color:transparent;
+}
+a:hover{
+	color:#0099cc;
+	font-size:11px;
+	text-decoration:none;
+	font-family:Arial, Helvetica, sans-serif;
+	background-color:transparent;
+}
+a:active{
+	color:#006699;
+	font-size:11px;
+	font-family:Arial, Helvetica, sans-serif;
+	background-color:transparent;
+}
+#center { 
+	width: 100%;	
+	height: 100%;	
+	text-align: center;	
+	white-space: nowrap;	
+}
+#spacerDiv { 
+	height: 98%; 		
+	width: 1px;	
+	vertical-align: middle;	
+}
+#centerContent_box {	
+	margin-left: -1px;		
+	vertical-align: middle;	
+}	
+#centerContent {	
+    /*
+    Not sure why, but setting the width causes the JavaScript that sets the prompts' text to make the text disappear in Firefox.
+    So I've set the width using JavaScript as well as the text ... see the funcSetup() function.
+
+    width: 571px;
+    */
+    height: 306px;
+    background-image:URL(/rc/images/login/loginBox.gif);
+    white-space: normal;
+    text-align: left;
+    min-height: 10px;
+}
+.spacerDiv_class {	
+	display: inline-block;	
+	display: -moz-inline-box;	
+}
+.internalFrame{
+	padding-top:110px;
+	text-align:center;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color: #333333;
+}
+.internalFrameBottom{
+	padding-top:20px;
+	text-align:center
+}
+
+#submitLoginButton,
+.appInputButton,
+.loginButton {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:10px;
+    background-image:URL(/rc/images/login/buttonBgBlue.gif);
+    border:1px solid #908474;
+    color:#6699cc;
+    cursor:pointer;
+    padding:2px 0px 2px 0px;
+    text-decoration:none;	
+}
+
+
+#legendEpsLogin,
+#liEpsLoginEmailLogoImage,
+#liEpsLoginLogoImage,
+#liEpsLoginShowEmail {
+    display: none;
+}
+#fieldsetEpsLogin,
+#mainform {
+    margin: 0px auto 0 auto;
+    width: 45em;
+}
+#fieldsetEpsLogin {
+    border: none;
+    float: left;
+}
+.labelEpsLogin {
+    float: left;
+    margin-top: 4px;
+    text-align: right;
+    width: 13em;
+}
+#olEpsLogin {
+    display: table;
+    margin: 0 auto 0 auto;
+    padding: 0;
+    list-style: none;
+}
+.liEpsLogin {
+    padding: 0.5em 0 0 0;
+    white-space: nowrap;
+    text-align: left;
+}
+.password,
+.text {
+    width: 130px;
+    margin-left: 1em;
+}
+#liEpsFailReason {
+    margin-top: -0.4em;
+    text-align: center;
+}
+#submitLoginButton{
+    margin: 0 0 0 25.8em;
+}
+#BookmarkerAndRC2ForgotPassword {
+    margin-top: 0.5em;
+    text-align: center;
+}
+#aBookmarker {
+    margin-right: 5em;
+}
+#liEpsLoginAttemptSSO {
+    margin-top: 0.5em;
+    text-align: center;
+}
+#RCRememberMe {
+    margin: 0 0 0 14.3em;
+}
+</style>
+<!--[if IE]>
+<style type="text/css">
+.spacerDiv_class {
+    display: inline-block;
+}
+.spacerDiv_class {
+    display: inline;
+}
+.internalFrameBottom {
+    padding-top:0px;
+}
+
+.labelEpsLogin {
+    margin-left: 6em;
+}
+#BookmarkerAndRC2ForgotPassword {
+    margin-top: 0.7em;
+}
+#RCRememberMe {
+    margin: 0 0 0 19.7em;
+}
+#submitLoginButton{
+    margin: 0 0 0 28.7em;
+}
+#liEpsLoginAttemptSSO {
+    margin-top: 0;
+}
+</style>
+<![endif]-->
+
+
+</head>
+<body bgcolor="#e1eedd" onload="funcSetup();">
+<div id="center">
+	<div id="spacerDiv" class="spacerDiv_class"></div>
+	<div id="centerContent_box" class="spacerDiv_class">
+		<div id="centerContent">
+			<div class="internalFrame">
+                <table width="450" border="0" cellspacing="0" cellpadding="0" align="center">
+                    <tr>
+                        <td>
+                            <!-- inside red box stuff -->
+                            
+<div id="divEpsLoginWrapper">
+
+<form method="post" action="/eprise/system/JSAuth/NoScript.html" name="mainform" id="mainform" onsubmit="return fixAction(this);">
+<input type="hidden" id="referer" name="referer" value="" />
+<input type="hidden" name="VerLoginAttempt" id="VerLoginAttempt" value="1" />
+<input type="hidden" name="EprFormName" id="EprFormName" value="LoginMain" />
+<fieldset class="fieldsetEpsLogin" id="fieldsetEpsLogin">
+
+<legend class="legendEpsLogin" id="legendEpsLogin">Eprise: Login</legend>
+
+<ol class="olEpsLogin" id="olEpsLogin">
+
+
+<li class="liEpsLogin" id="liEpsLoginLogoImage">
+
+</li>
+<!--
+<li></li>
+-->
+<li class="liEpsLogin" id="liEpsFailReason">The page you requested requires that you log in first.</li>
+<li class="liEpsLogin" id="liEpsLoginID">
+<label for="VerLoginID" class="labelEpsLogin" id="labelLoginIdPrompt">Login ID:</label>
+<input class="text" type="text" size="10" maxlength="80" name="VerLoginID" id="VerLoginID" />
+</li>
+<li class="liEpsLogin" id="liEpsLoginPassword">
+<label for="VerPassword" class="labelEpsLogin" id="labelPasswordPrompt">Password:</label>
+<input class="password" type="password" size="10" maxlength="80" name="VerPassword" id="VerPassword" autocomplete="off" />
+</li>
+<li class="liEpsLogin" id="liRememberMe">
+<input type="checkbox" class="appGenTxt" id="RCRememberMe" name="RCRememberMe" value="1" />
+remember user name
+</li>
+<li class="liEpsLogin" id="liEpsLoginSubmit">
+<input class="submit" type="submit" value="Login" id="submitLoginButton" />
+</li>
+<li class="liEpsLogin" id="BookmarkerAndRC2ForgotPassword">
+<a href="javascript:void(makeBM());" id="aBookmarker" style="display:none;">Want to bookmark this page?</a>
+<a href="javascript:void(funcGoForgottenPassword());" id="aRC2ForgotPassword">Did you forget your password?</a>
+</li>
+<li class="liEpsLogin" id="liEpsLoginShowEmail">
+<a id="aEpsLoginShowEmail" href="/eprise/system/JSAuth/NoScript.html" onclick="ShowEmail();return false;">Forgot Password?</a>
+</li>
+
+<li class='liEpsLogin' id='liEpsLoginAttemptSSO'><a id='aEpsLoginAttemptSSO' href="javascript:location.replace('/eprise/system/JSAuth/AttemptSSOLogin.html?referer=https%3a%2f%2facumen-redcarpet.silkroad.com%3a443%2feprise%2fmain%2fSiteGen%2fOnboarding%2fContent%2fUploads%2fUnplaced_Documents%2fVoluntary_Self-Identification_of_Disability.pdf')">Click here to log in using your network id</a></li>
+
+</ol>
+
+</fieldset>
+
+</form>
+
+</div>
+
+<div id="divEpsLoginEmailWrapper" style="display:none;">
+<form action="/eprise/local/SystemPages/doSendPasswordSelfService" method="post" name="emailform" id="emailform">
+<fieldset class="fieldsetEpsLoginEmail" id="fieldsetEpsLoginEmail">
+<legend class="legendEpsLoginEmail" id="legendEpsLoginEmail">Eprise: Login</legend>
+<ol class="olEpsLoginEmail" id="olEpsLoginEmail">
+<li class="liEpsLoginEmail" id="liEpsLoginEmailLogoImage">
+
+</li>
+<li class="liEpsLoginEmail" id="liEpsLoginEmailInstructions">
+If you have forgotten your password, enter your email address, and you will receive instructions on how to change your password.
+</li>
+<li class="liEpsLoginEmail" id="liEpsLoginEmailEmail">
+<label for="email" class="labelEpsLoginEmail" id="labelEpsLoginEmailPrompt">E-mail</label>
+<input class="text" type="text" maxlength="80" name="email" id="email" />
+</li>
+
+<li class="liEpsLoginEmail" id="liEpsLoginEmailSubmit">
+<input class="submit" type="submit" value="Send" id="submitEpsLoginEmailButton" />
+</li>
+<li class="liEpsLoginEmail" id="liEpsLoginEmailShowLogin">
+<a id="aEpsLoginEmailShowLogin" class="smalltext" href="/eprise/system/JSAuth/NoScript.html" onclick="ShowLogin();return false;">Show Login</a>
+</li>
+</ol>
+</fieldset>
+</form>
+</div>
+<script type="text/javascript">
+/*
+
+if(this.addLoadEvent) {
+addLoadEvent(clearFields);
+} else {
+alert("The JS function 'addLoadEvent' doesn't exist.\nDid you include $client.env.ClientJS in your HTML?");
+}
+
+*/
+</script>
+
+                            <!-- end inside red box stuff -->
+                        </td>
+                    </tr>
+                </table>
+			</div>
+                <!-- after red box stuff -->
+                <!-- end after red box stuff -->
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
